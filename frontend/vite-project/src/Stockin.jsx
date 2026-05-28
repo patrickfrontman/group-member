@@ -1,7 +1,8 @@
 import React from 'react'
-import { Plus,X } from 'lucide-react'
+import { Hash, Layers, Plus,X } from 'lucide-react'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import {motion,AnimatePresence} from 'framer-motion'
 
 function Stockin() {
   const [stockin,setStockin] = useState([])
@@ -118,9 +119,18 @@ function Stockin() {
         </table>
       </div>
       {/*model*/}
+      <AnimatePresence>
       {ismodel &&(
-        <div className="fixed inset-0 bg-slate-900/50 backdrop:blur-xs flex items-center justify-center">
-          <div className="w-[400px] bg-white p-6 rounded-2xl relative">
+        <motion.div className="fixed inset-0 bg-slate-900/50 backdrop:blur-xs flex items-center justify-center"
+        initial={{opacity:0}}
+        animate={{opacity:1}}
+        exit={{opacity:0}}
+        >
+          <motion.div className="w-[400px] bg-white p-6 rounded-2xl relative"
+          initial={{scale:0.8 , y:50 , opacity:0}}
+          animate={{scale:1 , y:0 , opacity:1}}
+          exit={{scale:0.8 , y:50 , opacity:0}}
+          >
             <button className="absolute right-4 top-4 text-gray-400 hover:bg-gray-100"
             onClick={()=>setIsModel(false)}>
               <X size={18}/>
@@ -128,12 +138,14 @@ function Stockin() {
             <h1 className="text-lg font-bold text-slate-900 mb-4">stockin regisrty</h1>
             <form
             className="flex flex-col gap-3">
+              <div className="relative">
               <label className="block text-gray-600 font-semibold mb-1 text-xs">select spare part item</label>
+              <Layers className="absolute left-2 text-gray-500 top-8"size={14}/>
               <select 
               value={sparepartid}
               onChange={(e)=>setSparepartid(e.target.value)}
               required
-              className="w-full p-2 border border-gray-300 rounded-xl text-sm bg-gray-50 focus:outline-blue-500">
+              className="w-full p-2 border border-gray-300 rounded-xl text-sm bg-gray-50 focus:outline-blue-500 pl-7 text-gray-500 mb-3">
                 <option value="">select item</option>
                 {sparepart.map((spa)=>(
                   <option key={spa._id} value={spa._id}>
@@ -143,7 +155,9 @@ function Stockin() {
 
                 ))}
               </select>
+              <div className="relative">
               <label className="block text-gray-600 font-semibold mb-1 text-xs">Incoming Quantity Units</label>
+              <Hash className="absolute text-gray-400 top-8 left-2"size={14}/>
                 <input 
                   type="number"
                   min="1"
@@ -151,8 +165,11 @@ function Stockin() {
                   onChange={(e) => setStockinquantity(e.target.value)}
                   placeholder="e.g. 50"
                   required
-                  className="w-full p-2 border border-gray-300 rounded-xl text-sm focus:outline-blue-500" 
+                  className="w-full p-2 border border-gray-300 rounded-xl text-sm focus:outline-blue-500 pl-7 bg-amber-50" 
                 />
+                </div>
+                </div>
+                <div className="">
                   <label className="block text-gray-600 font-semibold mb-1 text-xs">stockin date</label>
                 <input 
                   type="date"
@@ -160,19 +177,25 @@ function Stockin() {
                   onChange={(e) => setStockindate(e.target.value)}
                   placeholder=""
                   required
-                  className="w-full p-2 border border-gray-300 rounded-xl text-sm focus:outline-blue-500" 
+                  className="w-full p-2 border border-gray-300 rounded-xl text-sm focus:outline-blue-500 text-gray-500 bg-gray-50" 
                 />
+                </div>
                 <div className="flex gap-2 justify-end">
-                  <button onClick={()=>setIsModel(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-xl text-sm text-gray-700 hover:bg-gray-50">cancel</button>
+                  <motion.button onClick={()=>setIsModel(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-xl text-sm text-gray-700 hover:bg-gray-50"
+                  whileHover={{scale:1.05}}
+                  whileTap={{scale:0.95}}
+                  >cancel</motion.button>
                   <button onClick={sendrequest}
                   className="px-4 py-2 bg-blue-700 text-white rounded-xl text-sm font-semibold hover:bg-blue-800">confirm delivery</button>
                 </div>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
+    
   )
 }
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useNavigate,NavLink } from 'react-router-dom'
-import { LayoutDashboard,PackagePlus,Wrench,PackageMinus, User,LogOut } from 'lucide-react'
+import { LayoutDashboard,PackagePlus,Wrench,PackageMinus, User,LogOut,Menu} from 'lucide-react'
+import {motion} from 'framer-motion'
 
 function Dashboard() {
     const [Sparepart,setSparepart] = useState([])
     const [user,setUser] = useState(null)
+    const [sidebaropen,setSidebaropen] = useState(true)
     const navigate = useNavigate()
     useEffect(()=>{
         const exist = JSON.parse(localStorage.getItem("user"))
@@ -25,7 +27,14 @@ function Dashboard() {
   return (
     <>
     <div className='w-full min-h-screen flex  bg-white font-sans'>
-        <aside className="w-[260px] h-screen flex flex-col bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900">
+        <motion.aside className="w-[260px] h-screen flex flex-col bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900"
+        animate={{
+            width:sidebaropen ? 240:0,
+            opacity:sidebaropen ? 1:0
+
+        }}
+        transition = {{type:"string",stiffness:300,dumping:30}}
+        >
             <div className="p-4 border-b border-white">
                 <h1 className="text-2xl font-bold text-white mb-2">Smart Park</h1>
                 <p className='text-blue-200 text-[13px]'>manage your smart parking system</p>
@@ -64,11 +73,15 @@ function Dashboard() {
                 </div>
                 </div>
             </div>
-        </aside>
+        </motion.aside>
           <div className="flex flex-col w-full h-screen overflow-y-auto">
            <header className="w-full">
             <div className="bg-gray-100 shadow-sm p-3 flex justify-between">
-        <h1 className='text-black font-bold text-2xl'>welcome back👍</h1>
+                <div className="flex gap-4 relative">
+                <Menu onClick={()=>setSidebaropen(!sidebaropen)}
+                className="absolute left-2 top-2"size={20}/>
+        <h1 className='text-black font-bold text-2xl pl-8'> welcome back👍</h1>
+        </div>
         <div className="flex items-center gap-3 bg-slate-50 px-4 py-1.5 rounded-full border border-gray-100">
             <div className="text-right">
         <h1 className='text-[13px] font-semibold text-gray-700'>{user?.name}</h1>

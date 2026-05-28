@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { X } from 'lucide-react'
+import {motion,AnimatePresence} from 'framer-motion'
 
 function Sparepart() {
   const [sparepart,setSparepart] = useState([])
@@ -160,9 +161,18 @@ function Sparepart() {
           </tbody>
         </table>
        </div>
+       <AnimatePresence>
        {isModel &&(
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center">
-          <div className="w-[400px] bg-white rounded-2xl p-6 border border-gray-200 relative">
+        <motion.div className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center"
+        initial={{opacity:0}}
+        animate={{opacity:1}}
+        exit={{opacity:0}}
+        >
+          <motion.div className="w-[400px] bg-white rounded-2xl p-6 border border-gray-200 relative"
+          initial={{scale:0.8 , y:50 , opacity:0}}
+          animate={{scale:1 , y:0 , opacity:1}}
+          exit={{scale:0.8 , y:50 , opacity:0}}
+          >
             <button onClick={()=>setIsModel(false)}
             className="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
                <X size={18}/>
@@ -205,13 +215,15 @@ function Sparepart() {
 
                 
               
-              <div className="flex gap-2 justify-end mt-4"><button 
+              <div className="flex gap-2 justify-end mt-4"><motion.button 
     type="button"
     onClick={() => setIsModel(false)}
     className="px-4 py-2 border border-gray-300 rounded-xl text-sm text-gray-700 hover:bg-gray-50"
+    whileHover={{scale:1.05}}
+    whileTap={{scale:0.95}}
   >
     Cancel
-  </button>
+  </motion.button>
   <button 
     type="submit"
     className="px-4 py-2 bg-blue-700 text-white rounded-xl text-sm font-semibold hover:bg-blue-800"
@@ -222,10 +234,11 @@ function Sparepart() {
                 
               </div>
             </form>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
     
        )}
+       </AnimatePresence>
     
 
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Edit2Icon, Edit3, Form, Plus, Trash2 } from 'lucide-react'
+import { ArchiveX, Boxes, CircleDollarSign, Edit2Icon, Edit3, Form, Hash, Package2, Plus, Trash2, Truck } from 'lucide-react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import {X} from 'lucide-react'
+import {motion,AnimatePresence} from 'framer-motion'
 
 function Stockout() {
   const [stockoutquantity,setStockoutquantity] = useState("")
@@ -203,7 +204,7 @@ function Stockout() {
   }} 
                 className='px-4 py-1  text-xs rounded-xl text-gray-500'><Edit3 size={18}/></button>
                  <button onClick={()=>handledelete(sta._id)}
-                 className="px-2 py-1 text-gray-500 rounded-xl hover:shadow-lg transition-all duration-200 ease-in-out font-medium"><Trash2 size={18}/></button>
+                 className="px-2 py-1 text-gray-500  transition-all duration-200 ease-in-out font-medium"><Trash2 size={18}/></button>
                  </div>
               </td>
             </tr>
@@ -212,9 +213,18 @@ function Stockout() {
         </table>
       </div>
       {/*set model open */}
+      <AnimatePresence>
       {isModel &&(
-        <div className="fixed inset-0 bg-slate-900/50 backdrop:blur-xs flex items-center justify-center">
-          <div className="w-[400px] bg-white rounded-2xl p-6 border border-gray-100 relative">
+        <motion.div className="fixed inset-0 bg-slate-900/50 backdrop:blur-xs flex items-center justify-center"
+        initial={{opacity:0}}
+        animate={{opacity:1}}
+        exit={{opacity:0}}
+        >
+          <motion.div className="w-[400px] bg-white rounded-2xl p-6 border border-gray-100 relative"
+          initial={{scale:0.8 , y:50 , opacity:0}}
+          animate={{scale:1 , y:0 , opacity:1}}
+          exit={{scale:0.8 ,  y:50 , opacity:0}}
+          >
             <button onClick={()=>setIsModel(false)} 
             className="absolute right-4 top-4 text-gray-400">
               <X size={18}/>
@@ -223,49 +233,60 @@ function Stockout() {
             className="flex flex-col gap-3 mb-4">
               <h1 className="text-lg font-bold text-slate-900 mb-4">stockout registry</h1>
 
+              <div className="relative">
               <label className="block text-gray-600 font-semibold mb-1 text-xs">quantity</label>
+              <Hash className="absolute top-8 left-2 text-gray-400"size={15}/>
               <input type="number"
               value={stockoutquantity}
               onChange={(e)=>setStockoutquantity(e.target.value)}
               placeholder="e.g. 50"
-              className="w-full border border-gray-200 rounded-xl text-xs focus:outline-blue-500 py-3 p-2 "></input>
+              className="w-full border border-gray-200 rounded-xl text-xs focus:outline-blue-500 py-3 p-2 pl-7"></input>
+              </div>
 
+              <div className="relative">
               <label className="block text-gray-600 font-semibold mb-1 text-xs">sparepart item</label>
+              <Truck className="absolute top-8.5 left-2 text-gray-400"size={15}/>
               <select
               value={sparepartid}
               onChange={(e)=>setSparepartid(e.target.value)}
               required
-              className="w-full border border-gray-200 py-3 focus:outline-blue-500 text-xs p-2 rounded-xl">
+              className="w-full border border-gray-200 py-3 focus:outline-blue-500 text-xs p-2 rounded-xl pl-7 text-gray-500">
                 <option value="">select item</option>
                 {sparePart.map((spa)=>(
                   <option key={spa._id} value={spa._id}>{spa.name}</option>
                 ))}
               </select>
-
+              </div>
+                <div className="relative">
                 <label className="block text-gray-600 font-semibold mb-1 text-xs">unit price</label>
+                <CircleDollarSign className="absolute text-gray-400 top-8 left-2"size={15}/>
               <input type="number"
               value={stockoutunitprice}
               onChange={(e)=>setStockoutunitprice(e.target.value)}
               placeholder="e.g. 5000"
-              className="w-full border border-gray-200 rounded-xl text-xs focus:outline-blue-500 py-3 p-2 mb-3 "></input>
+              className="w-full border border-gray-200 rounded-xl text-xs focus:outline-blue-500 py-3 p-2 mb-3 pl-9"></input>
+              </div>
 
               <div className="flex gap-2 justify-end">
                  
-  <button
+  <motion.button
     type="button"
     onClick={() =>setIsModel(false)}
     className="mt-2 bg-white text-gray-600 py-2 px-4 border border-gray-300 rounded-2xl"
+    whileHover={{scale:0.8}}
+    whileTap={{scale:0.95}}
   >
     cancel
-  </button>
+  </motion.button>
                 <button onClick={updatemode ? "update record" : "send record"}
                 className="mt-2 bg-blue-700  text-white py-2 px-4 border rounded-2xl">send record</button>
               </div>
 
             </form>
-          </div>
-        </div>
-      )}     
+          </motion.div>
+        </motion.div>
+      )}
+      </AnimatePresence>     
     </div>
   )
 }
