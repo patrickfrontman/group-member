@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useNavigate,NavLink } from 'react-router-dom'
 import { LayoutDashboard,PackagePlus,Wrench,PackageMinus, User,LogOut,Menu} from 'lucide-react'
-import {motion} from 'framer-motion'
+import {motion,AnimatePresence} from 'framer-motion'
 
 function Dashboard() {
     const [Sparepart,setSparepart] = useState([])
@@ -68,7 +68,7 @@ function Dashboard() {
                 <div className="mt-auto border-t border-white pt-4">
                     
                 <div className="relative">
-                    <LogOut className='absolute top-3.5 left-12 text-white'size={15}/>
+                    <LogOut className='absolute top-3.5 left-10 text-white'size={15}/>
                     <button onClick={logout} className='w-full bg-red-500/20 hover:bg-red-600/50 text-white p-2 rounded-xl transition-all duration-300 flex items-center justify-center gap-2'>logout</button>
                 </div>
                 </div>
@@ -93,7 +93,17 @@ function Dashboard() {
         </div>
     </header>
     <main className='flex bg-white flex-col'>
-        <Outlet/>
+        <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname} 
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Outlet/>
+            </motion.div>
+          </AnimatePresence>
     </main>
         
 

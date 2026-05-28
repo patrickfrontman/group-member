@@ -60,7 +60,7 @@ function Login() {
         {/* RIGHT SIDE: Your Login Form */}
         <div className="w-1/2 p-12 shadow-r-lg">
           <form onSubmit={sendrequest}>
-            <h1 className="text-3xl font-bold mb-2 text-slate-500">Login Form</h1>
+            <h1 className="text-3xl font-bold mb-2 text-slate-700">Login Form</h1>
             <p className="mb-8 text-gray-700 text-[14px]">enter your credentials to continue</p>
             
             <div className="mb-4">

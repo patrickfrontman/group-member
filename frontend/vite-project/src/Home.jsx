@@ -88,7 +88,7 @@ function Home() {
           <div className="relative">
           <div className="bg-gray-100 border w-[320px] h-[140px] rounded-xl border-gray-300 p-4 hover:scale-105 duration-500 transition-all">
             <h2 className="text-lg font-bold text-blue-700 mb-2">Total stock unit</h2>
-            <HardDrive className='absolute top-3 right-2 text-blue-500 bg-white rounded-xl w-10 h-10 p-2 'size={20}/>
+            <HardDrive className='absolute top-3 right-5 text-blue-500 bg-white rounded-xl w-10 h-10 p-2 'size={20}/>
             <p className=" text-slate-900 text-4xl font-bold">{stockin.length}</p>
             <p className='text-[11px] text-gray-400 mt-1'>items currently inside inventory</p>
           </div>
@@ -96,7 +96,7 @@ function Home() {
           <div className="relative">
           <div className="bg-gray-100 border w-[320px] h-[140px] rounded-xl border-gray-300 p-4 hover:scale-105 duration-500 transition-all">
             <h2 className="text-lg font-bold text-amber-600 mb-2">Total stock out</h2>
-            <PackageMinus className='absolute top-3 right-2 text-amber-600 bg-white rounded-xl w-10 h-10 p-2 'size={20}/>
+            <PackageMinus className='absolute top-3 right-5 text-amber-600 bg-white rounded-xl w-10 h-10 p-2 'size={20}/>
             <p className=" text-slate-900 text-4xl font-bold">{stockout.length}</p>
             <p className='text-[11px] text-gray-400 mt-1'>items currently outside inventory</p>
           </div>
